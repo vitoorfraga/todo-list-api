@@ -1,6 +1,8 @@
 package br.com.vitorfraga.todolist.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,15 +18,15 @@ public class UserController {
 
   // => Método de cadastro:
   @PostMapping("/")
-  public UserModel create(@RequestBody UserModel userModel) {
+  public ResponseEntity create(@RequestBody UserModel userModel) {
     var user = this.userRepository.findByUserName(userModel.getUserName());
 
     if(user != null) {
       System.out.println("Usuário já existente");
-      return null;
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário já existente");
     };
     
     var userCreated = this.userRepository.save(userModel);
-    return userCreated;
+    return ResponseEntity.status(HttpStatus.ACCEPTED).body(userCreated);
   }
 }
