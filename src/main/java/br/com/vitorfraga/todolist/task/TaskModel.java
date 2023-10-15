@@ -24,7 +24,7 @@ public class TaskModel {
   @Column(length = 50) // Limita o tamanho do title para 50 caracteres
   private String title;
   private LocalDateTime startAt;
-  private LocalDateTime entAt;
+  private LocalDateTime endAt;
   private String priority;
 
   @CreationTimestamp
